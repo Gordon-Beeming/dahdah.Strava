@@ -10,7 +10,8 @@ function Hash-Folder([string]$FolderPath, [string]$SaveTo)
   $FilesInFolder = Get-ChildItem -LiteralPath $FolderPath -Filter "*.cs"  
   foreach($File in $FilesInFolder)
   {
-    if (-not ($File.FullName.Contains("Client\Configuration.cs")))
+    if ((-not ($File.FullName.Contains("Client\Configuration.cs"))) -and
+        (-not ($File.FullName.Contains("Client/Configuration.cs"))))
     {
       $FileHash = (Get-FileHash -LiteralPath $File.FullName -Algorithm SHA1).Hash
       $FileHashes += "$($FileHash)|$($File.Name)`n"
