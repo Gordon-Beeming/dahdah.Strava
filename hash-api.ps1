@@ -30,15 +30,15 @@ if (-not (Test-Path -LiteralPath "$($CurrentPath)\api"))
 {
   New-Item "$($CurrentPath)\api" -ItemType Directory
 }
-if (Hash-Folder -FolderPath "$($CurrentPath)\g\src\Demo.Strava.NetCore\Api" -SaveTo "$($CurrentPath)\api\api.state")
+if (Hash-Folder -FolderPath "$($CurrentPath)\g\src\dahdah.Strava.NetCore\Api" -SaveTo "$($CurrentPath)\api\api.state")
 {
   $publishPackage = $true
 }
-if (Hash-Folder -FolderPath "$($CurrentPath)\g\src\Demo.Strava.NetCore\Client" -SaveTo "$($CurrentPath)\api\Client.state")
+if (Hash-Folder -FolderPath "$($CurrentPath)\g\src\dahdah.Strava.NetCore\Client" -SaveTo "$($CurrentPath)\api\Client.state")
 {
   $publishPackage = $true
 }
-if (Hash-Folder -FolderPath "$($CurrentPath)\g\src\Demo.Strava.NetCore\Model" -SaveTo "$($CurrentPath)\api\Model.state")
+if (Hash-Folder -FolderPath "$($CurrentPath)\g\src\dahdah.Strava.NetCore\Model" -SaveTo "$($CurrentPath)\api\Model.state")
 {
   $publishPackage = $true
 }
