@@ -1,13 +1,22 @@
 [string]$CurrentPath = $PSScriptRoot
+$github_ref = "$($env:GITHUB_REF)"
+if ([string]::IsNullOrEmpty($github_ref))
+{
+  $github_ref = "local"
+}
 function Hash-Folder([string]$FolderPath, [string]$SaveTo)
 {
   $FileHashes = ""
   $FilesInFolder = Get-ChildItem -LiteralPath $FolderPath -Filter "*.cs"  
   foreach($File in $FilesInFolder)
   {
-    $FileHash = (Get-FileHash -LiteralPath $File.FullName -Algorithm SHA1).Hash
-    $FileHashes += "$($FileHash)|$($File.Name)`n"
+    if (-not ($File.FullName.Contains("Client\Configuration.cs")))
+    {
+      $FileHash = (Get-FileHash -LiteralPath $File.FullName -Algorithm SHA1).Hash
+      $FileHashes += "$($FileHash)|$($File.Name)`n"
+    }
   }
+  $FileHashes += $github_ref
   $FileHashes = $FileHashes.Trim()
   $CurrentSaveToHash = ""
   if (Test-Path -LiteralPath $SaveTo)
@@ -44,7 +53,7 @@ if (Hash-Folder -FolderPath "$($CurrentPath)\g\src\dahdah.Strava.NetCore\Model" 
 }
 Write-Host "publishPackage=$($publishPackage)"
 Write-Host "::set-output name=publishPackage::$($publishPackage)"
-if ($publishPackage)
+if ($publishPackage -and $github_ref -ne "local")
 {
   git add api/*
   git config --global user.name "CI System" 
