@@ -1,0 +1,59 @@
+name: Update Package
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: "0 7 * * *"
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set version
+        shell: pwsh
+        run: |
+          ./set-version.ps1
+
+      - name: Generate Strava codegen API
+        shell: pwsh
+        run: |
+          Write-Host "`$env:GITHUB_WORKSPACE: $($env:GITHUB_WORKSPACE)"
+          docker run -v $env:GITHUB_WORKSPACE/:/generated/ swaggerapi/swagger-codegen-cli generate -i https://developers.strava.com/swagger/swagger.json -l csharp -o generated/g -c "/generated/out-config.json"
+
+      - name: Code Fixes
+        shell: pwsh
+        run: |
+          ./code-fixes.ps1
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.102
+
+      - name: Package API
+        shell: pwsh
+        run: |
+          dotnet pack out-dahdah.Strava.NetCore.csproj --configuration "Release" --output "package"
+
+      - name: Hash API
+        id: hash_api
+        shell: pwsh
+        run: |
+          ./hash-api.ps1
+
+      - name: Push Package
+        if: steps.hash_api.outputs.publishPackage == 'True'
+        env:
+          NUGET_KEY: ${{ secrets.NUGET_KEY }}
+        shell: pwsh
+        run: |
+          dotnet nuget push "package/*.nupkg" --api-key $env:NUGET_KEY --source https://api.nuget.org/v3/index.json

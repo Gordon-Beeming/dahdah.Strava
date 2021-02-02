@@ -1,0 +1,13 @@
+{
+    "packageName": "dahdah.Strava.NetCore",
+    "packageVersion": "0.0.1",
+    "targetFramework": "v5.0",
+    "netCoreProjectFile": true,
+    "optionalAssemblyInfo": false,
+    "optionalProjectFile": false,
+    "optionalMethodArgument": false,
+    "validatable": false,
+    "packageGuid": "ec78d841-8673-4ea5-897c-996b6167c6f5",
+    "interfacePrefix": "I",
+    "clientPackage": "dahdah.Strava.NetCore.Client"
+}

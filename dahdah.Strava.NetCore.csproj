@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <AssemblyTitle>dahdah.Strava.NetCore</AssemblyTitle>
+    <AssemblyName>dahdah.Strava.NetCore</AssemblyName>
+    <RootNamespace>dahdah.Strava.NetCore</RootNamespace>
+    <Version>0.0.1</Version>
+    
+    <PackageId>dahdah.Strava.NetCore</PackageId>
+    <PackageVersion>0.0.1</PackageVersion>
+    <Authors>Gordon Beeming (dahdah demo)</Authors>
+    <Description>Strava .net5 library generated off https://developers.strava.com/swagger/swagger.json built for demo purposes https://dahdah.xyz/.</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <!-- <PackageReleaseNotes></PackageReleaseNotes> -->
+    <Copyright>Copyright 2021 (c) Gordon Beeming. All rights reserved.</Copyright>
+    <PackageTags>Strava dahdah</PackageTags>
+    
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+
+  </PropertyGroup>
+  
+  <ItemGroup>
+    
+    <Compile Remove="g\src\dahdah.Strava.NetCore.Test\**\*.*" />
+
+    <Compile Remove="g\src\dahdah.Strava.NetCore\Model\DetailedActivity.cs" />
+    <Compile Remove="g\src\dahdah.Strava.NetCore\Model\SummaryActivity.cs" />
+
+    <PackageReference Include="FubarCoder.RestSharp.Portable.Core" Version="4.0.7" />
+    <PackageReference Include="FubarCoder.RestSharp.Portable.HttpClient" Version="4.0.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+
+</Project>
